@@ -6,11 +6,17 @@ import Footer from "@/components/footer";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-export const metadata: Metadata = {
+// src/app/layout.tsx
+export const metadata = {
   title: { default: "Nirantara Trading", template: "%s | Nirantara Trading" },
   description: "Trusted exporter of healthcare products.",
-  icons: { icon: "/favicon.ico" },
+  manifest: "/site.webmanifest",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
 };
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -17,7 +17,7 @@ import {
 import EnquiryFormClient from "./EnquiryFormClient";   // ✅ client component
 
 // Reuse the About hero (exists at: src/app/about/hero.jpg)
-import hero from "../about/hero.jpg";
+import hero from "../about/dealership.jpg";
 
 export const metadata = {
   title: "Dealership / Partnership",

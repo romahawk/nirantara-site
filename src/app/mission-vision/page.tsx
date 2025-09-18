@@ -12,7 +12,7 @@ import {
 
 // ✅ Place hero.jpg next to this file: src/app/mission-vision/hero.jpg
 //    (If you want to reuse the About hero instead, change to: import hero from "../about/hero.jpg")
-import hero from "./hero.jpg";
+import hero from "../about/mission.jpg";
 
 export const metadata = {
   title: "Mission & Vision",

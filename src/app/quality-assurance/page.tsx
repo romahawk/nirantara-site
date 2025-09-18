@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 // Reuse the About hero (exists at: src/app/about/hero.jpg)
-import hero from "../about/hero.jpg";
+import hero from "../about/quality.jpg";
 
 export const metadata = {
   title: "Quality Assurance",
