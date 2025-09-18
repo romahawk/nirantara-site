@@ -11,8 +11,9 @@ html, body {
 }
 
 body {
-  @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))] font-sans antialiased;
+  @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))] font-sans antialiased overflow-x-hidden;
 }
+
 
 /* Layout helper */
 .container { @apply mx-auto max-w-7xl px-4 md:px-6 lg:px-8; }
@@ -36,3 +37,4 @@ body {
 
 /* Prose defaults (when you use `prose` on article content) */
 .prose { @apply max-w-none; }
+
