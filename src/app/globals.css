@@ -2,26 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Light/Dark tokens driven by next-themes (class strategy) */
+:root { --bg: 255 255 255; --fg: 17 24 39; }      /* slate-900 */
+.dark { --bg:   3  6 12;  --fg: 226 232 240; }    /* near slate-950 / slate-200 */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))] font-sans antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Layout helper */
+.container { @apply mx-auto max-w-7xl px-4 md:px-6 lg:px-8; }
+
+/* Reusable atoms */
+.link { @apply text-gray-800 hover:text-brand dark:text-gray-300 dark:hover:text-white transition-colors; }
+.card { @apply rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-white/5 backdrop-blur p-6; }
+
+/* Buttons (optional) */
+@layer components {
+  .btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors; }
+  .btn-primary { @apply btn bg-brand text-white hover:opacity-90; }
+  .btn-outline { @apply btn border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-white/10; }
 }
+
+/* Typography plugin fine-tuning */
+@layer utilities {
+  /* Nice title wrapping */
+  .text-balance { text-wrap: balance; }
+}
+
+/* Prose defaults (when you use `prose` on article content) */
+.prose { @apply max-w-none; }

@@ -1,0 +1,8 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "css.validate": false,
+  "tailwindCSS.includeLanguages": { "plaintext": "html" },
+  "tailwindCSS.experimental.classRegex": [
+    "clsx\\(([^)]*)\\)"
+  ]
+}
