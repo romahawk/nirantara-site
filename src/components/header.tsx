@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, Building2 } from "lucide-react";
 import ModeToggle from "./mode-toggle";
 
@@ -18,6 +19,26 @@ const links = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Which link is active?
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
+  // Tailwind class builder for desktop links with underline
+  const desktopLinkClass = (href: string) => {
+    const baseUnderline =
+      'after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:rounded-full';
+    return [
+      "link font-medium relative pb-1 transition-colors",
+      baseUnderline,
+      isActive(href)
+        ? "text-brand after:bg-brand"
+        : "after:bg-transparent hover:after:bg-brand/40",
+    ].join(" ");
+  };
 
   // lock scroll while the mobile menu is open
   useEffect(() => {
@@ -30,15 +51,16 @@ export default function Header() {
   return (
     <>
       {/* Sticky header with translucent blurred background */}
-      <header className="
-        sticky top-0 z-40
-        border-b border-transparent
-        bg-[rgb(var(--bg))/70] backdrop-blur-md
-        supports-[backdrop-filter]:bg-[rgb(var(--bg))/60]
-      ">
-
+      <header
+        className="
+          sticky top-0 z-40
+          border-transparent
+          bg-[rgb(var(--bg))/70] backdrop-blur-md
+          supports-[backdrop-filter]:bg-[rgb(var(--bg))/60]
+        "
+      >
         <div className="container h-14 flex items-center justify-between gap-3">
-          {/* Brand with Building2 icon */}
+          {/* Brand */}
           <Link
             href="/"
             className="flex items-center gap-2 font-semibold tracking-tight"
@@ -58,7 +80,12 @@ export default function Header() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-5">
             {links.slice(0, 5).map((l) => (
-              <Link key={l.href} href={l.href} className="link font-medium">
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={isActive(l.href) ? "page" : undefined}
+                className={desktopLinkClass(l.href)}
+              >
                 {l.label}
               </Link>
             ))}
@@ -129,20 +156,26 @@ export default function Header() {
 
             <nav className="px-3 pb-3">
               <ul className="grid">
-                {links.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="
-                        block rounded-lg px-3 py-2.5
-                        hover:bg-gray-100 dark:hover:bg-white/10
-                      "
-                      onClick={() => setOpen(false)}
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
+                {links.map((l) => {
+                  const active = isActive(l.href);
+                  return (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        aria-current={active ? "page" : undefined}
+                        className={[
+                          "block rounded-lg px-3 py-2.5",
+                          active
+                            ? "bg-gray-100 dark:bg-white/10 text-brand font-medium"
+                            : "hover:bg-gray-100 dark:hover:bg-white/10",
+                        ].join(" ")}
+                        onClick={() => setOpen(false)}
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
 
               <div className="p-3">
