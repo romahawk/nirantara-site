@@ -19,7 +19,11 @@ const links = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  
+  // ✨ normalize pathname for GitHub Pages (basePath)
+  const raw = usePathname() || "/";
+  const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";   // e.g. "/nirantara-site"
+  const pathname = BASE && raw.startsWith(BASE) ? raw.slice(BASE.length) : raw;
 
   // Which link is active?
   const isActive = (href: string) => {
