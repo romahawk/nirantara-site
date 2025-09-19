@@ -4,14 +4,13 @@
 
 /* ==== Design tokens (light/dark) ==== */
 :root {
-  /* page background & foreground (RGB for easy alpha use) */
-  --bg: 255 255 255;        /* white */
-  --fg: 17 24 39;           /* slate-900 */
+  --bg: 255 255 255;      /* page background in RGB */
+  --fg: 17 24 39;         /* text color in RGB */
+  --brand: 20 85 254;     /* brand color in RGB  (#1455FE) */
 }
-
 .dark {
-  --bg: 3 7 18;             /* near-black */
-  --fg: 229 231 235;        /* slate-200 */
+  --bg: 3 7 18;
+  --fg: 229 231 235;
 }
 
 /* ==== Base document styling ==== */
@@ -21,44 +20,34 @@ body {
   background-color: rgb(var(--bg));
   color: rgb(var(--fg));
 }
-
-/* Remove default link decoration; use .link utility below for styling */
 a { text-decoration: none; }
-
-/* Allow long words to wrap nicely */
 * { word-wrap: break-word; }
 
 /* ==== Layout helpers ==== */
-/* Custom container to center content; adjust as desired */
 .container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;  /* 16px */
-  padding-right: 1rem; /* 16px */
-  max-width: 1200px;   /* ≈ 2xl breakpoint */
+  margin-left: auto; margin-right: auto;
+  padding-left: 1rem; padding-right: 1rem;
+  max-width: 1200px;
 }
 @media (min-width: 1024px) {
   .container { padding-left: 2rem; padding-right: 2rem; }
 }
-
-/* Make prose blocks full width unless you add your own constraints */
 .prose { max-width: none; }
 
 /* ==== Reusable atoms ==== */
-/* NOTE: no variants (hover:, dark:) inside @apply */
+/* NO variants inside @apply — hover/dark colors via plain CSS */
 .link {
   @apply transition-colors;
-  color: rgb(31 41 55);        /* slate-800 */
+  color: rgb(31 41 55);          /* slate-800 */
 }
 .link:hover {
-  @apply transition-colors;
-  color: #1455FE;              /* brand */
+  color: rgb(var(--brand));      /* brand */
 }
 .dark .link {
-  color: rgb(209 213 219);     /* slate-300 */
+  color: rgb(209 213 219);       /* slate-300 */
 }
 .dark .link:hover {
-  color: rgb(255 255 255);     /* white */
+  color: #ffffff;
 }
 
 /* Card primitive (neutral); combine with .glass for frosted look */
@@ -90,7 +79,7 @@ a { text-decoration: none; }
 /* Buttons */
 .btn-primary {
   @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 font-medium shadow-sm transition;
-  background-color: #1455FE;          /* brand */
+  background-color: rgb(var(--brand));
   color: #ffffff;
 }
 .btn-primary:hover { filter: brightness(1.06); }
@@ -98,18 +87,18 @@ a { text-decoration: none; }
 
 .btn-outline {
   @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 font-medium transition border;
-  color: rgb(17 24 39);                /* slate-900 */
-  border-color: rgb(209 213 219);      /* slate-300 */
+  color: rgb(17 24 39);
+  border-color: rgb(209 213 219);
   background-color: transparent;
 }
 .btn-outline:hover { background-color: rgb(0 0 0 / 0.04); }
 .dark .btn-outline {
-  color: rgb(229 231 235);             /* slate-200 */
+  color: rgb(229 231 235);
   border-color: rgb(255 255 255 / 0.18);
 }
 .dark .btn-outline:hover { background-color: rgb(255 255 255 / 0.08); }
 
-/* Utility: subtle on-surface divider (use where needed) */
+/* Utility divider */
 .divider {
   background: linear-gradient(to right, transparent, rgb(0 0 0 / 0.08), transparent);
 }
