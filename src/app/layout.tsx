@@ -7,7 +7,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 // src/app/layout.tsx
-export const metadata = {
+export const metadata: Metadata = {
   title: { default: "Nirantara Trading", template: "%s | Nirantara Trading" },
   description: "Trusted exporter of healthcare products.",
   manifest: "/site.webmanifest",

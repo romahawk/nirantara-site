@@ -4,7 +4,6 @@ import {
   Cookie,
   Share2,
   UserCheck,
-  RefreshCcw,
   Mail,
   Phone,
   MapPin,
