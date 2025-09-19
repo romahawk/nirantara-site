@@ -1,32 +1,21 @@
-// tailwind.config.ts
 import type { Config } from "tailwindcss";
-import typography from "@tailwindcss/typography";
 
-const config = {
+export default {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}", // 👈 make sure Tailwind scans all app files
+  ],
   darkMode: "class",
-  content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        brand: { DEFAULT: "#1455FE", foreground: "#ffffff" },
+        brand: "#1455FE", // 👈 used by text-brand, border-brand, etc.
       },
-      boxShadow: { header: "0 8px 30px rgba(0,0,0,.06)" },
-      fontFamily: {
-        // works if you added Inter via next/font and set --font-inter
-        sans: ["var(--font-inter)", "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"],
-      },
-      // simple, typed-safe overrides for prose in dark mode
-      typography: {
-        invert: {
-          css: {
-            "--tw-prose-body": "rgb(226 232 240)",   // slate-200
-            "--tw-prose-headings": "rgb(255 255 255)",
-          },
-        },
+      container: {
+        center: true,
+        padding: { DEFAULT: "1rem", lg: "2rem" },
+        screens: { "2xl": "1200px" },
       },
     },
   },
-  plugins: [typography],
+  plugins: [],
 } satisfies Config;
-
-export default config;
