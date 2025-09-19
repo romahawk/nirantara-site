@@ -2,46 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light/Dark tokens driven by next-themes (class strategy) */
-:root { --bg: 255 255 255; --fg: 17 24 39; }      /* slate-900 */
-.dark { --bg:   3  6 12;  --fg: 226 232 240; }    /* near slate-950 / slate-200 */
-
-html, body {
-  height: 100%;
+/* ==== Design tokens (light/dark) ==== */
+:root {
+  /* page background & foreground (RGB for easy alpha use) */
+  --bg: 255 255 255;        /* white */
+  --fg: 17 24 39;           /* slate-900 */
 }
 
+.dark {
+  --bg: 3 7 18;             /* near-black */
+  --fg: 229 231 235;        /* slate-200 */
+}
+
+/* ==== Base document styling ==== */
+html, body { height: 100%; }
 body {
-  @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))] font-sans antialiased overflow-x-hidden;
+  @apply font-sans antialiased overflow-x-hidden;
+  background-color: rgb(var(--bg));
+  color: rgb(var(--fg));
 }
 
+/* Remove default link decoration; use .link utility below for styling */
+a { text-decoration: none; }
 
-/* Layout helper */
-.container { @apply mx-auto max-w-7xl px-4 md:px-6 lg:px-8; }
+/* Allow long words to wrap nicely */
+* { word-wrap: break-word; }
 
-/* Reusable atoms */
-/* Reusable atoms */
+/* ==== Layout helpers ==== */
+/* Custom container to center content; adjust as desired */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;  /* 16px */
+  padding-right: 1rem; /* 16px */
+  max-width: 1200px;   /* ≈ 2xl breakpoint */
+}
+@media (min-width: 1024px) {
+  .container { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Make prose blocks full width unless you add your own constraints */
+.prose { max-width: none; }
+
+/* ==== Reusable atoms ==== */
+/* NOTE: no variants (hover:, dark:) inside @apply */
 .link {
-  @apply text-gray-800 dark:text-gray-300 transition-colors;
+  @apply transition-colors;
+  color: rgb(31 41 55);        /* slate-800 */
 }
 .link:hover {
-  @apply text-brand dark:text-white;
+  @apply transition-colors;
+  color: #1455FE;              /* brand */
+}
+.dark .link {
+  color: rgb(209 213 219);     /* slate-300 */
+}
+.dark .link:hover {
+  color: rgb(255 255 255);     /* white */
 }
 
-.card { @apply rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-white/5 backdrop-blur p-6; }
-
-/* Buttons (optional) */
-@layer components {
-  .btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors; }
-  .btn-primary { @apply btn bg-brand text-white hover:opacity-90; }
-  .btn-outline { @apply btn border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-white/10; }
+/* Card primitive (neutral); combine with .glass for frosted look */
+.card {
+  @apply rounded-2xl border backdrop-blur p-6;
+  background-color: rgba(255, 255, 255, 0.70);
+  border-color: rgb(229 231 235);   /* slate-200 */
+}
+.dark .card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgb(31 41 55);      /* slate-800 */
 }
 
-/* Typography plugin fine-tuning */
-@layer utilities {
-  /* Nice title wrapping */
-  .text-balance { text-wrap: balance; }
+/* Frosted "glass" look (use with .card: <div class="card glass">) */
+.glass,
+.card.glass {
+  @apply border backdrop-blur-md;
+  background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.58));
+  border-color: rgb(255 255 255 / 0.25);
+  box-shadow: 0 10px 30px rgb(2 6 23 / 0.08);
+}
+.dark .glass,
+.dark .card.glass {
+  background: linear-gradient(180deg, rgba(17,24,39,0.55), rgba(17,24,39,0.45));
+  border-color: rgb(255 255 255 / 0.10);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
 }
 
-/* Prose defaults (when you use `prose` on article content) */
-.prose { @apply max-w-none; }
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 font-medium shadow-sm transition;
+  background-color: #1455FE;          /* brand */
+  color: #ffffff;
+}
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-primary:active { transform: translateY(0.5px); }
 
+.btn-outline {
+  @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 font-medium transition border;
+  color: rgb(17 24 39);                /* slate-900 */
+  border-color: rgb(209 213 219);      /* slate-300 */
+  background-color: transparent;
+}
+.btn-outline:hover { background-color: rgb(0 0 0 / 0.04); }
+.dark .btn-outline {
+  color: rgb(229 231 235);             /* slate-200 */
+  border-color: rgb(255 255 255 / 0.18);
+}
+.dark .btn-outline:hover { background-color: rgb(255 255 255 / 0.08); }
+
+/* Utility: subtle on-surface divider (use where needed) */
+.divider {
+  background: linear-gradient(to right, transparent, rgb(0 0 0 / 0.08), transparent);
+}
+.dark .divider {
+  background: linear-gradient(to right, transparent, rgb(255 255 255 / 0.10), transparent);
+}
